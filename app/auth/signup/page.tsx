@@ -29,7 +29,7 @@ export default function Signup() {
 
       <AuthCard>
         <h1 className="text-3xl font-bold text-center mb-2 text-gray-800">
-          Create Account 🚀
+          Create Your Account 🚀
         </h1>
 
         <p className="text-sm text-center mb-6">
@@ -52,7 +52,7 @@ export default function Signup() {
         <p className="text-sm text-center mt-6">
           Already have an account?{" "}
           <Link
-            href="/login"
+            href="/auth/login"
             className="text-pink-600 font-semibold hover:underline">
             Login
           </Link>
