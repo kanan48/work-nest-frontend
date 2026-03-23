@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import AuthCard from "@/src/core-ui/components/AuthCard";
+import AuthCard from "@/src/core-ui/layout/AuthCard";
 import Input from "@/src/core-ui/inputs/Input";
 import Button from "@/src/core-ui/buttons/Button";
 import Image from "next/image";
