@@ -5,6 +5,7 @@ import Link from "next/link";
 import AuthCard from "@/src/core-ui/layout/AuthCard";
 import Input from "@/src/core-ui/inputs/Input";
 import Button from "@/src/core-ui/buttons/Button";
+import { useRouter } from "next/navigation";
 
 type SignupFormData = {
   name: string;
@@ -14,9 +15,35 @@ type SignupFormData = {
 
 export default function Signup() {
   const { register, handleSubmit } = useForm<SignupFormData>();
+  const router = useRouter();
 
-  const onSubmit = (data: SignupFormData) => {
-    console.log(data);
+  const onSubmit = async (data: SignupFormData) => {
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        console.log("Login success:", result);
+
+        // ✅ Optional: store user/token (later JWT)
+        localStorage.setItem("user", JSON.stringify(result.user));
+
+        // ✅ Redirect to dashboard
+        router.push("/auth/login");
+      } else {
+        console.log(result.message);
+        alert(result.message); // simple error handling
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

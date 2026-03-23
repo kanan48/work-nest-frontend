@@ -6,7 +6,7 @@ import AuthCard from "@/src/core-ui/layout/AuthCard";
 import Input from "@/src/core-ui/inputs/Input";
 import Button from "@/src/core-ui/buttons/Button";
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 type LoginFormData = {
   email: string;
   password: string;
@@ -14,9 +14,35 @@ type LoginFormData = {
 
 export default function Login() {
   const { register, handleSubmit } = useForm<LoginFormData>();
+  const router = useRouter();
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log(data);
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        console.log("Login success:", result);
+
+        // ✅ Optional: store user/token (later JWT)
+        localStorage.setItem("user", JSON.stringify(result.user));
+
+        // ✅ Redirect to dashboard
+        router.push("/Dashboard");
+      } else {
+        console.log(result.message);
+        alert(result.message); // simple error handling
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleGoogleSignIn = () => {
