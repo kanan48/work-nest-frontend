@@ -1,12 +1,19 @@
 "use client";
 
+// 🔹 Hooks
+import { useAuth } from "@/src/hooks/useAuth";
+
+// 🔹 Layout Components
 import Navbar from "@/src/core-ui/layout/Navbar";
 import Sidebar from "@/src/core-ui/layout/Sidebar";
+
+// 🔹 Dashboard Components
 import StatsCard from "@/src/core-ui/dashboard/StatsCard";
 import ProjectCard from "@/src/core-ui/dashboard/ProjectCard";
 import RecentActivity from "@/src/core-ui/dashboard/RecentActivity";
 
 export default function Dashboard() {
+  useAuth();
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar />
